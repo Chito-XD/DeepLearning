@@ -85,7 +85,15 @@ def sigmoid_backward(dA, cache):
 
 
 def load_data():
+    from PIL import Image
+    from numpy import asarray
+  
+  
+    # load the image and convert into 
+    # numpy array
+
     train_dataset = h5py.File('datasets/train_catvnoncat.h5', "r")
+    # print(train_dataset)
     train_set_x_orig = np.array(train_dataset["train_set_x"][:]) # your train set features
     train_set_y_orig = np.array(train_dataset["train_set_y"][:]) # your train set labels
 
@@ -100,6 +108,37 @@ def load_data():
     
     return train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes
 
+
+def load_proyectddo():
+    import os 
+    from PIL import Image
+    import numpy as np
+
+    train_set_x_orig = []
+    # train_set_x_orig.tolist()
+    # train_set_x_orig = np.array([])
+    # train_set_x_orig = np.array()
+
+    for dirname, _, filenames in os.walk('makeup/train/makeup'):
+        for filename in filenames:
+            image_path = os.path.join(dirname, filename)
+            img = Image.open(image_path)
+            image_array = np.array(img)
+            train_set_x_orig.append(image_array)
+    
+    # train_set_x_orig = np.asarray(train_set_x_orig)
+    # train_set_x_orig = np.array(train_set_x_orig)
+    
+    return train_set_x_orig
+
+
+
+    # from PIL import Image
+    # from numpy import asarray
+
+    # img = Image.open('makeup1005.jpeg')
+    # numpydata = np.array(img)
+    # return numpydata
 
 def initialize_parameters(n_x, n_h, n_y):
     """
