@@ -109,36 +109,183 @@ def load_data():
     return train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes
 
 
-def load_proyectddo():
-    import os 
+def get_test_data():
+    from pathlib import Path
+    from PIL import Image
+    import os, shutil
+    from os import listdir
+    ## Image Resizing
     from PIL import Image
     import numpy as np
 
-    train_set_x_orig = []
-    # train_set_x_orig.tolist()
-    # train_set_x_orig = np.array([])
-    # train_set_x_orig = np.array()
+    # load and display an image with Matplotlib
+    from matplotlib import image
+    from matplotlib import pyplot
+    import matplotlib.pyplot as plt
+    dim = (64, 64)
 
-    for dirname, _, filenames in os.walk('makeup/train/makeup'):
-        for filename in filenames:
-            image_path = os.path.join(dirname, filename)
-            img = Image.open(image_path)
-            image_array = np.array(img)
-            train_set_x_orig.append(image_array)
-    
-    # train_set_x_orig = np.asarray(train_set_x_orig)
-    # train_set_x_orig = np.array(train_set_x_orig)
-    
-    return train_set_x_orig
+    # MAKEUP
+    images_dir = Path('makeup/test/makeup').expanduser()
+
+    # Resizing all the images to same dimension
+    X_image_train = []
+    for fname in listdir(images_dir):
+        fpath = os.path.join(images_dir, fname)
+        im = Image.open(fpath)
+        im_resized = im.resize(dim)
+        X_image_train.append(im_resized)
+
+    #NO MAKEUP
+    images_dir = Path('makeup/test/no_makeup').expanduser()
+
+    # Resizing all the images to same dimension
+    for fname in listdir(images_dir):
+        fpath = os.path.join(images_dir, fname)
+        im = Image.open(fpath)
+        im_resized = im.resize(dim)
+        X_image_train.append(im_resized)
+
+    ## Converting the image to numpy array
+    train_x_origin=[]
+    for x in range(len(X_image_train)):
+        X_image=np.array(X_image_train[x],dtype='uint8')
+        train_x_origin.append(X_image)
+
+    train_x_origin = np.asarray(train_x_origin)
+
+
+    train_set_y = []
+    for i in range(0, 194):
+        #makeup
+        train_set_y.append(1)
+
+    for i in range(0, 73):
+        #no makeup
+        train_set_y.append(0)
+
+    train_set_y = np.array([train_set_y])
+
+    return train_x_origin, train_set_y
 
 
 
-    # from PIL import Image
-    # from numpy import asarray
+def get_train_data():
+    from pathlib import Path
+    from PIL import Image
+    import os, shutil
+    from os import listdir
+    ## Image Resizing
+    from PIL import Image
+    import numpy as np
 
-    # img = Image.open('makeup1005.jpeg')
-    # numpydata = np.array(img)
-    # return numpydata
+    # load and display an image with Matplotlib
+    from matplotlib import image
+    from matplotlib import pyplot
+    import matplotlib.pyplot as plt
+    dim = (64, 64)
+
+    # MAKEUP
+    images_dir = Path('makeup/train/makeup').expanduser()
+
+    # Resizing all the images to same dimension
+    X_image_train = []
+    for fname in listdir(images_dir):
+        fpath = os.path.join(images_dir, fname)
+        im = Image.open(fpath)
+        im_resized = im.resize(dim)
+        X_image_train.append(im_resized)
+
+    #NO MAKEUP
+    images_dir = Path('makeup/train/no_makeup').expanduser()
+
+    # Resizing all the images to same dimension
+    for fname in listdir(images_dir):
+        fpath = os.path.join(images_dir, fname)
+        im = Image.open(fpath)
+        im_resized = im.resize(dim)
+        X_image_train.append(im_resized)
+
+    ## Converting the image to numpy array
+    train_x_origin=[]
+    for x in range(len(X_image_train)):
+        X_image=np.array(X_image_train[x],dtype='uint8')
+        train_x_origin.append(X_image)
+
+    train_x_origin = np.asarray(train_x_origin)
+
+
+    train_set_y = []
+    for i in range(0, 858):
+        #makeup
+        train_set_y.append(1)
+
+    for i in range(0, 361):
+        #no makeup
+        train_set_y.append(0)
+
+    train_set_y = np.array([train_set_y])
+
+    return train_x_origin, train_set_y
+
+
+def get_dev_data():
+    from pathlib import Path
+    from PIL import Image
+    import os, shutil
+    from os import listdir
+    ## Image Resizing
+    from PIL import Image
+    import numpy as np
+
+    # load and display an image with Matplotlib
+    from matplotlib import image
+    from matplotlib import pyplot
+    import matplotlib.pyplot as plt
+    dim = (64, 64)
+
+    # MAKEUP
+    images_dir = Path('makeup/dev/makeup').expanduser()
+
+    # Resizing all the images to same dimension
+    X_image_train = []
+    for fname in listdir(images_dir):
+        fpath = os.path.join(images_dir, fname)
+        im = Image.open(fpath)
+        im_resized = im.resize(dim)
+        X_image_train.append(im_resized)
+
+    #NO MAKEUP
+    images_dir = Path('makeup/dev/no_makeup').expanduser()
+
+    # Resizing all the images to same dimension
+    for fname in listdir(images_dir):
+        fpath = os.path.join(images_dir, fname)
+        im = Image.open(fpath)
+        im_resized = im.resize(dim)
+        X_image_train.append(im_resized)
+
+    ## Converting the image to numpy array
+    train_x_origin=[]
+    for x in range(len(X_image_train)):
+        X_image=np.array(X_image_train[x],dtype='uint8')
+        train_x_origin.append(X_image)
+
+    train_x_origin = np.asarray(train_x_origin)
+
+
+    train_set_y = []
+    for i in range(0, 10):
+        #makeup
+        train_set_y.append(1)
+
+    for i in range(0, 10):
+        #no makeup
+        train_set_y.append(0)
+
+    train_set_y = np.array([train_set_y])
+
+    return train_x_origin, train_set_y
+
 
 def initialize_parameters(n_x, n_h, n_y):
     """
